@@ -251,6 +251,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\mandatoryAssignment.mdf" />
     <Content Include="bin\AarhusWebDevelopers.dll" />
     <Content Include="bin\AarhusWebDevelopers.pdb" />
     <Content Include="bin\amd64\Microsoft.VC90.CRT\msvcr90.dll" />
@@ -2086,7 +2087,9 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />

@@ -1,0 +1,22 @@
+footer {
+	position: fixed;
+    bottom: 0;
+	left: 0;
+	right: 0;
+    height: 60px;
+    line-height: 60px;
+    background-color: #f5f5f5;
+}
+
+body {
+	padding-bottom: 60px;
+}
+
+.umb-grid img {
+	width: 100%;
+	margin-bottom: 1em;
+}
+/*
+.nav-item.dropdown:hover .dropdown-menu {
+	display: block;
+}*/

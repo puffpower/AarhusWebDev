@@ -1,0 +1,19 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using Umbraco.Core.Models
+@using Umbraco.Web
+
+@{
+    var selection = Model.Content.Site().Children
+                    .Where("DocumentTypeAlias == \"projectsOverview\"")
+                    .First().Children().Where("projectStatus.Contains(\"32\")")
+                    .OrderBy("CreateDate desc").Take(3);
+}
+  
+<div class="col-xs-12" style="padding: 0 15px; width: 100%;">
+    <h2>De 3 nyeste færdiggjorte projekter</h2>
+</div>
+@foreach (var item in selection) {
+    <div class="col-xs-12 col-sm-6 col-md-4">
+        <a href="@item.Url">@item.Name</a>
+    </div>
+}

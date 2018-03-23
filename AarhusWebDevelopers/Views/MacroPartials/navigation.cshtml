@@ -1,0 +1,72 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using Umbraco.Web
+
+
+@*
+    This snippet displays a list of links of the pages immediately under the top-most page in the content tree.
+    This is the home page for a standard website.
+    It also highlights the current active page/section in the navigation with the CSS class "current".
+*@
+
+@{ 
+    var root= Model.Content.Site();
+    var selection = Model.Content.Site().Children.Where(x => x.IsVisible()).ToArray(); 
+    
+    IEnumerable<IPublishedContent> items = Umbraco.TypedContentAtRoot().First().Children().Where(x => x.DocumentTypeAlias == "projectsOverview").First().Children().Where(x => x.HasValue("projectStatus") && Umbraco.GetPreValueAsString(x.GetPropertyValue<int>("projectStatus")) == "Completed").Where(x => x.IsVisible()).OrderByDescending(x => x.CreateDate);
+    
+}
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <div class="container">
+            <!-- logo -->
+            <a class="navbar-brand text-light" href="/">
+                @{
+                    var typedMediaPickerSingle = Umbraco.TypedContentAtRoot().First().GetPropertyValue<IPublishedContent>("logo");
+                    if (typedMediaPickerSingle != null)
+                    {
+                        <img src="@typedMediaPickerSingle.Url" style="height: 40px; width: auto; margin-bottom: 0;" alt="@typedMediaPickerSingle.GetPropertyValue("alt")" />
+                    }
+                }
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- the navigation -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    @foreach (var menuItem in selection)
+                    {
+                        if(menuItem.Children().Where(x => x.IsVisible()).Count() > 0){
+                            <li class="@((menuItem.Name== Model.Content.Name) ? "active" : null) nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-light" href="@menuItem.Url" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @menuItem.Name
+                                </a>
+                            
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @foreach (var subMenuItem in menuItem.Children().Where(x => x.IsVisible())){
+                                    if (subMenuItem.DocumentTypeAlias == "projectItem") {
+                                    
+                                        var isProtected = umbraco.library.IsProtected(subMenuItem.Id, subMenuItem.Path);
+                                        var loginAccess = umbraco.library.IsProtected(subMenuItem.Id, subMenuItem.Path) && umbraco.library.HasAccess(subMenuItem.Id, subMenuItem.Path);
+                                    
+                                        if(!isProtected|| loginAccess) {
+                                            <a class="dropdown-item" href="@subMenuItem.Url">@subMenuItem.Name</a>
+                                        }
+                                    } else {
+                                        <a class="dropdown-item" href="@subMenuItem.Url">@subMenuItem.Name</a>
+                                    }
+                                }
+                            </div>
+                            
+                            </li>
+                        } else {
+                            <li class="@((menuItem.Name== Model.Content.Name) ? "active" : null) nav-item">
+                                <a class="nav-link text-light" href="@menuItem.Url">@menuItem.Name</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>

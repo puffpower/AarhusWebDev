@@ -251,7 +251,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\mandatoryAssignment.mdf" />
     <Content Include="bin\AarhusWebDevelopers.dll" />
     <Content Include="bin\AarhusWebDevelopers.pdb" />
     <Content Include="bin\amd64\Microsoft.VC90.CRT\msvcr90.dll" />
@@ -2119,6 +2118,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="Views\ContactFormSurface\" />
   </ItemGroup>

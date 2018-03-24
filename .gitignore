@@ -293,3 +293,7 @@ __pycache__/
 
 # Ignore the Models Builder models out of date flag
 **/App_Data/Models/ood.flag
+
+
+.sass-cache/
+*.css.map
